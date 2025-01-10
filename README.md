@@ -1,7 +1,7 @@
 # DemoBundle
 
 A Symfony 7.2 Demo Bundle.
-There is no need for a an instalelr scritp. Just copy to /src/Bunldes/
+There is no need for a an installer scritp. Just copy to /src/Bunldes/
 
 Drop a like if you find this useful.
 
