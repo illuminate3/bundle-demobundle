@@ -1,9 +1,35 @@
 # DemoBundle
 
 A Symfony 7.2 Demo Bundle.
-There is no need for a an installer scritp. Just copy to /src/Bunldes/
+There is no need for a an installer script. Just copy to /src/Bundles/
 
 Drop a like if you find this useful.
+
+## Directory Structure
+
+```
+DemoBundle/
+├── config/                 # Configuration files
+│   ├── routes.yaml        # Route definitions
+│   ├── services.yaml      # Service definitions
+│   └── validation.yaml    # Validation rules
+├── src/                   # Source code
+│   ├── Command/          # Console commands
+│   ├── Controller/       # Controllers
+│   ├── Entity/          # Doctrine entities
+│   ├── Event/           # Event classes
+│   ├── EventListener/   # Event listeners
+│   ├── Repository/      # Doctrine repositories
+│   ├── Security/        # Security related classes
+│   ├── Service/         # Services
+│   ├── Twig/           # Twig extensions
+│   └── Validator/      # Custom validators
+├── templates/            # Twig templates
+├── tests/               # Test files
+├── translations/        # Translation files
+├── DemoBundle.php       # Bundle class
+└── composer.json        # Bundle dependencies
+```
 
 ## Installation
 
@@ -44,7 +70,7 @@ return [
 Add to your `config/routes.yaml`:
 ```yaml
 demo_bundle:
-    resource: '@DemoBundle/Resources/config/routes.yaml'
+    resource: '@DemoBundle/config/routes.yaml'
     prefix: /demo
 ```
 
@@ -53,7 +79,7 @@ Add to your `config/packages/twig.yaml`:
 ```yaml
 twig:
     paths:
-        '%kernel.project_dir%/src/Bundles/DemoBundle/Resources/views': DemoBundle
+        '%kernel.project_dir%/src/Bundles/DemoBundle/templates': DemoBundle
 ```
 
 ### Step 6: Clear Cache
@@ -66,22 +92,6 @@ php bin/console cache:clear
 ### Demo Test
 - View test page at `/demo/test`
 - Demonstrates basic bundle setup and Twig template integration
-
-## Directory Structure
-```
-DemoBundle/
-├── Controller/               # Route controllers
-├── DependencyInjection/     # Bundle configuration
-├── Resources/
-│   ├── config/            # Bundle configuration files
-│   │   ├── routes.yaml
-│   │   ├── services.yaml
-│   │   └── validation.yaml
-│   └── views/             # Twig templates
-│       ├── layout.html.twig
-│       └── demo/
-└── Tests/                  # Test files
-```
 
 ## Configuration Reference
 

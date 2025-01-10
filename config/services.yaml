@@ -4,9 +4,9 @@ services:
         autoconfigure: true
         public: false
 
-    App\Bundles\DemoBundle\:
-        resource: '../../*'
-        exclude: '../../{DependencyInjection,Entity,Tests}'
+    App\Bundles\DemoBundle\src\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Tests}'
 
     App\Bundles\DemoBundle\EventListener\QuoteViewedListener:
         tags:

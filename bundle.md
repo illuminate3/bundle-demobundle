@@ -5,75 +5,66 @@ Create the following directory structure in your Symfony project:
 
 ```
 /src/Bundles/DemoBundle/
-    /Command/                        # Console commands
-        .gitignore                  # Keep empty dir in git
-    /Controller/                     # Controllers
-        DemoController.php
-        QuoteController.php
-    /DependencyInjection/           # Bundle configuration and extension
-        DemoExtension.php
-        Configuration.php
-    /Entity/                        # Doctrine entities
-        .gitignore
-    /Event/                         # Event classes
-        QuoteViewedEvent.php
-    /EventListener/                 # Event listeners/subscribers
-        QuoteViewedListener.php
-    /Exception/                     # Bundle-specific exceptions
-        .gitignore
-    /Factory/                       # Factory classes
-        .gitignore
-    /Form/                         # Form types
-        /Type/
+    /config/                        # Configuration files
+        routes.yaml                # Route definitions
+        services.yaml             # Service definitions
+        validation.yaml           # Validation rules
+    /src/                          # Source code
+        /Command/                 # Console commands
             .gitignore
-        /Extension/
+        /Controller/             # Controllers
+            DemoController.php
+        /Entity/                 # Doctrine entities
             .gitignore
-    /Manager/                      # Service managers
-        .gitignore
-    /Model/                        # Model interfaces and classes
-        .gitignore
-    /Repository/                   # Doctrine repositories
-        .gitignore
-    /Resources/
-        /config/                   # Configuration files
-            services.yaml
-            routes.yaml
-            validation.yaml
-        /fixtures/                 # Data fixtures
+        /Event/                  # Event classes
             .gitignore
-        /translations/             # Translation files
+        /EventListener/         # Event listeners
             .gitignore
-        /views/                    # Twig templates
-            layout.html.twig
-            /quote/
-                index.html.twig
-                random.html.twig
-    /Security/                     # Security related classes
-        /Voter/
+        /EventSubscriber/       # Event subscribers
             .gitignore
-        /Authentication/
+        /Exception/             # Bundle-specific exceptions
             .gitignore
-        /Authorization/
+        /Message/               # Message classes
             .gitignore
-    /Service/                      # Service classes
-        .gitignore
-    /Tests/                        # Unit and functional tests
+        /MessageHandler/        # Message handlers
+            .gitignore
+        /Middleware/            # Middleware classes
+            .gitignore
+        /Repository/           # Doctrine repositories
+            .gitignore
+        /Security/             # Security related classes
+            /Authentication/
+                .gitignore
+            /Authorization/
+                .gitignore
+            /Voter/
+                .gitignore
+        /Service/              # Service classes
+            .gitignore
+        /Twig/                # Twig extensions
+            /Extension/
+                .gitignore
+            /Runtime/
+                .gitignore
+        /Utils/               # Utility classes
+            .gitignore
+        /Validator/           # Custom validators
+            /Constraint/
+                .gitignore
+    /templates/                    # Twig templates
+        layout.html.twig
+        /demo/
+            index.html.twig
+    /tests/                       # Test files
         /Controller/
             DemoControllerTest.php
-    /Twig/                         # Twig extensions
-        /Extension/
-            .gitignore
-        /Runtime/
-            .gitignore
-    /Utils/                        # Utility classes
+    /translations/                # Translation files
         .gitignore
-    /Validator/                    # Custom validators
-        /Constraint/
-            .gitignore
-    DemoBundle.php                 # Bundle class
-    README.md                      # Bundle documentation
-    LICENSE                        # License information
-    composer.json                  # Composer configuration
+    DemoBundle.php               # Bundle class
+    README.md                    # Bundle documentation
+    LICENSE                      # License information
+    composer.json                # Composer configuration
+    phpunit.xml.dist            # PHPUnit configuration
 ```
 
 ## Step 2: Create Core Bundle Files
@@ -108,7 +99,7 @@ class DemoExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../config'));
         $loader->load('services.yaml');
     }
 }
@@ -151,9 +142,9 @@ services:
         autoconfigure: true
         public: false
 
-    App\Bundles\DemoBundle\:
-        resource: '../../*'
-        exclude: '../../{DependencyInjection,Entity,Tests}'
+    App\Bundles\DemoBundle\src\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Tests}'
 
     App\Bundles\DemoBundle\EventListener\QuoteViewedListener:
         tags:
@@ -164,8 +155,8 @@ services:
 ```yaml
 demo_bundle_routes:
     resource: 
-        path: ../../Controller/
-        namespace: App\Bundles\DemoBundle\Controller
+        path: ../src/Controller/
+        namespace: App\Bundles\DemoBundle\src\Controller
     type: attribute
 ```
 
@@ -194,7 +185,7 @@ return [
 ### Step 3.3: Configure routes in config/routes.yaml
 ```yaml
 demo_bundle:
-    resource: '@DemoBundle/Resources/config/routes.yaml'
+    resource: '@DemoBundle/config/routes.yaml'
     prefix: /demo
 ```
 
@@ -202,5 +193,4 @@ demo_bundle:
 ```yaml
 twig:
     paths:
-        '%kernel.project_dir%/src/Bundles/DemoBundle/Resources/views': DemoBundle
-```
+        '%kernel.project_dir%/src/Bundles/DemoBundle/templates': DemoBundle
