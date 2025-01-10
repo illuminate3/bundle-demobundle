@@ -1,0 +1,8 @@
+# Add validation configuration here
+# Example:
+# App\Entity\User:
+#     properties:
+#         email:
+#             - Email: ~
+#         password:
+#             - NotBlank: ~

@@ -1,0 +1,5 @@
+demo_bundle_routes:
+    resource: 
+        path: ../../Controller/
+        namespace: App\Bundles\DemoBundle\Controller
+    type: attribute

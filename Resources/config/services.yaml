@@ -1,0 +1,13 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Bundles\DemoBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Tests}'
+
+    App\Bundles\DemoBundle\EventListener\QuoteViewedListener:
+        tags:
+            - { name: kernel.event_listener, event: quote.viewed, method: onQuoteViewed }
